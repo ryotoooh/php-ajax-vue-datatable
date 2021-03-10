@@ -4,26 +4,28 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="vue.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
   <title>PHP Ajax Vue Datatable</title>
 </head>
 
 <body>
-  <div id='myapp'>
+  <!-- <div id='myapp'> -->
 
-    <!-- Select All records -->
-    <input type='button' @click='allRecords()' value='Select All users'>
-    <br><br>
+  <!-- Select All records -->
+  <!-- <input type='button' @click='allRecords()' value='Select All users'>
+    <br><br> -->
 
-    <!-- Select record by ID -->
-    <input type='text' v-model='userid' placeholder="Enter Userid between 1 - 24">
+  <!-- Select record by ID -->
+  <!-- <input type='text' v-model='userid' placeholder="Enter Userid between 1 - 24">
     <input type='button' @click='recordByID()' value='Select user by ID'>
-    <br><br>
+    <br><br> -->
 
-    <!-- List records -->
-    <table border='1' width='80%' style='border-collapse: collapse;'>
+  <!-- List records -->
+  <!-- <table border='1' width='80%' style='border-collapse: collapse;'>
       <tr>
         <th>Username</th>
         <th>Name</th>
@@ -35,43 +37,112 @@
         <td>{{ user.city }}</td>
         <td>{{ user.description }}</td>
       </tr>
-    </table>
+    </table> -->
+  <!-- </div> -->
 
+  <div id="app">
+    <v-app>
+      <v-main>
+        <v-container>Hello world</v-container>
+        <input type='button' @click='allRecords()' value='Select All users'>
+
+        <template>
+          <v-data-table :headers="headers" :items="users" :items-per-page="5" class="elevation-1">
+            <!-- <template slot="items" slot-scope="props">
+              <td>@{{ props.item.region }}</td>
+              <td class="text-xs-right">@{{ props.item.city }}</td>
+              <td class="text-xs-right">@{{ props.item.description }}</td>
+            </template> -->
+          </v-data-table>
+        </template>
+      </v-main>
+    </v-app>
   </div>
+  <!-- <script src="vue.js"></script> -->
+  <!-- <script src="vuetify.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
+    // var app = new Vue({
+    //   el: '#myapp',
+    //   vuetify: new Vuetify(),
+    //   data: {
+    //     users: "",
+    //     userid: 0
+    //   },
+    //   methods: {
+    //     allRecords: function () {
+
+    //       axios.get('ajaxfile.php')
+    //         .then(function (response) {
+    //           app.users = response.data;
+    //         })
+    //         .catch(function (error) {
+    //           console.log(error);
+    //         });
+    //     },
+    //     recordByID: function () {
+    //       if (this.userid > 0) {
+
+    //         axios.get('ajaxfile.php', {
+    //           params: {
+    //             userid: this.userid
+    //           }
+    //         })
+    //           .then(function (response) {
+    //             app.users = response.data;
+    //           })
+    //           .catch(function (error) {
+    //             console.log(error);
+    //           });
+    //       }
+    //     }
+    //   }
+    // })
     var app = new Vue({
-      el: '#myapp',
+      el: '#app',
+      vuetify: new Vuetify(),
       data: {
-        users: "",
-        userid: 0
+        headers: [
+          {
+            text: 'Dessert (100g serving)',
+            align: 'start',
+            sortable: false,
+            value: 'region',
+          },
+          { text: 'Calories', value: 'city' },
+          { text: 'Fat (g)', value: 'description' },
+        ],
+        users: [],
+        // userid: 0
       },
       methods: {
         allRecords: function () {
-
           axios.get('ajaxfile.php')
             .then(function (response) {
               app.users = response.data;
+              console.log(app.users);
             })
             .catch(function (error) {
               console.log(error);
             });
         },
-        recordByID: function () {
-          if (this.userid > 0) {
-
-            axios.get('ajaxfile.php', {
-              params: {
-                userid: this.userid
-              }
-            })
-              .then(function (response) {
-                app.users = response.data;
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-          }
-        }
+        // recordByID: function () {
+        //   if (this.userid > 0) {
+        //     axios.get('ajaxfile.php', {
+        //       params: {
+        //         userid: this.userid
+        //       }
+        //     })
+        //       .then(function (response) {
+        //         app.users = response.data;
+        //       })
+        //       .catch(function (error) {
+        //         console.log(error);
+        //       });
+        //   }
+        // }
       }
     })
   </script>
